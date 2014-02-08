@@ -48,10 +48,9 @@ for s in suits:
 
      	deck.cards.append(card)
 
-
-     		
+deck.Shuffle(1)     		
 
 for c in deck.cards:
-	_c = c
-	print(str.format('The card is the {} of {}',_c.name, _c.suit.name))
+	print(str.format('The card is the {} of {}',c.name, c.suit.name))
+
 
