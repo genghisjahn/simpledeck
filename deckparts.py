@@ -15,9 +15,16 @@ class Deck():
 	cards = []
 	def Shuffle(self,times):
 		shuffled_deck = []
-		card_index = random.randint(0, 51)
-		shuffle_card = self.cards[card_index]
-		if shuffle_card in self.cards: 
-				self.cards.remove(shuffle_card)
-		shuffled_deck.append(shuffle_card)
+		max_cards = len(self.cards)
+		for i in range(0,len(self.cards)):
+			card_index = random.randint(0, max_cards-1)
+			shuffle_card = self.cards[card_index]
+			if shuffle_card in self.cards: 
+					self.cards.remove(shuffle_card)
+			if shuffle_card in shuffled_deck:
+				raise Exception(str.format("ERROR -- The {} of {} is already in this deck!",shuffle_card.value,shuffle_card.suit.name))
+			shuffled_deck.append(shuffle_card)
+			max_cards-=1
 		self.cards = shuffled_deck
+		if times-1>0:
+			self.Shuffle(times-1)
