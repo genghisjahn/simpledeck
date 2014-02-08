@@ -16,7 +16,7 @@ class Deck():
 	def Shuffle(self,times):
 		shuffled_deck = []
 		max_cards = len(self.cards)
-		for i in range(0,len(self.cards)):
+		for i in range(0,max_cards):
 			card_index = random.randint(0, max_cards-1)
 			shuffle_card = self.cards[card_index]
 			if shuffle_card in self.cards: 
