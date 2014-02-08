@@ -5,6 +5,7 @@ class Suit():
 class Card():
 	suit = Suit()
 	value = ''
+	abbr = ''
 	lownum = 0
 	highnum = 0
 

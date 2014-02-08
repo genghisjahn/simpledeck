@@ -19,12 +19,6 @@ suits.append(suit_c)
 suits.append(suit_d)
 
 
-card = Card
-card.suit = suit_h
-card.name = 'Ace'
-card.abbr = 'A'
-card.highnum= 14
-card.lownum = 1
 
 deck=Deck()
 
