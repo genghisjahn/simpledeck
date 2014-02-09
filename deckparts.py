@@ -11,6 +11,16 @@ class Card():
 	lownum = 0
 	highnum = 0
 
+class Hand():
+	cards = []
+	score = 0
+
+class Player():
+	name = ''
+	hand = Hand()
+
+
+
 class Deck():
 	cards = []
 	def Shuffle(self,times):
