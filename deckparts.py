@@ -32,14 +32,12 @@ class Player():
 
 class Deck():
 	cards = []
-	_suits = []
 
 	def __init__(self):
-		self._suits = self._getsuits()
 		self._build()
 
 	def _build(self):
-		for s in self._suits:
+		for s in self._getsuits():
 		     for c in range(1, 14):
 		     	card = Card()
 		     	card.suit = s
