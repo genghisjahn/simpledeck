@@ -1,7 +1,7 @@
 from deckparts import Game,Player
 
 game = Game()
-game.Setup(2, )
+game.Setup(2, 5)
 game.deck.Shuffle(10)
 
 p1 = Player()
