@@ -48,9 +48,5 @@ for s in suits:
 
      	deck.cards.append(card)
 
-deck.Shuffle(10)     		
+deck.Shuffle(10)
 
-for c in deck.cards:
-	print(str.format('The card is the {} of {}',c.name, c.suit.name))
-
-print(str.format("Card Count:{}",len(deck.cards)))
