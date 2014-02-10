@@ -16,7 +16,7 @@ class Hand():
 	_cards = []
 	score = 0
 	def AddCard(self, card):
-		self._cards(card)
+		self._cards.append(card)
 
 	def RemoveCard(self,index):
 		self._cards.remove(index)
@@ -27,10 +27,9 @@ class Hand():
 class Player():
 	name = ''
 	hand = Hand()
+	def __init__(self):
+		self.hand = Hand()
 	
-
-
-
 class Deck():
 	cards = []
 
@@ -95,3 +94,46 @@ class Deck():
 		self.cards = shuffled_deck
 		if times-1>0:
 			self.Shuffle(times-1)
+
+class Game():
+	deck = Deck()
+
+	_maxplayers = 0
+	_players = []
+	_cardsperhand = 0
+
+	def Setup(self,maxplyrs,crdsperhand):
+		if self._maxplayers * self._cardsperhand > 52:
+			raise Exception(str.format("More than 52 cards are required to give {} players {} cards.",maxplyrs,crdsperhand))
+		if crdsperhand<5:
+			raise Exception(str.format("You need at least 5 cards per hand to pla."))
+
+		self._maxplayers = maxplyrs
+		self._cardsperhand = crdsperhand
+
+	def AddPlayer(self,player):
+		if len(self._players)<=self._maxplayers and player not in self._players:
+			self._players.append(player)
+		else:
+			if len(self._players)>self._maxplayers:
+				raise Exception(str.format("Max players {} are already in the game.",self._maxplayers))
+			if player in self._players:
+				raise Exception(str.format("Player {} has already been added.",player.name))
+
+	def RemovePlayer(self,player):
+		if player in self._players:
+			self._players.remove(player)
+
+	def GetPlayers(self):
+		return self._players
+
+	def Deal(self):
+		if len(self._players)==0:
+			raise Exception(str.format("You have to add players to deal."))
+
+		_players = self.GetPlayers()
+		for i in range(1,self._cardsperhand+1):
+			for p in _players:
+				card = self.deck.cards[0]
+				p.hand.AddCard(card)
+				self.deck.cards.remove(card)
