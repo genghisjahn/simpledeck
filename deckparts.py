@@ -112,6 +112,8 @@ class Game():
 		else:
 			if len(self._players)>self._maxplayers:
 				raise Exception(str.format("Max players {} are already in the game.",self._maxplayers))
+			if player in self._players:
+				raise Exception(str.format("Player {} has already been added.",player.name))
 
 	def RemovePlayer(self,player):
 		if player in self._players:
