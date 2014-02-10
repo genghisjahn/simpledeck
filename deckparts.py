@@ -121,3 +121,7 @@ class Game():
 
 	def GetPlayers(self):
 		return self._players
+
+	def Deal(self):
+		if len(self._players)==0:
+			raise Exception(str.format("You have to add players to deal."))
