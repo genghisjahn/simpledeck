@@ -12,20 +12,21 @@ class Card():
 	highnum = 0
 
 class Hand():
-	cards = []
+	_cards = []
 	score = 0
+	def AddCard(self, card):
+		self._cards(card)
+
+	def RemoveCard(self,index):
+		self._cards.remove(index)
+
+	def GetCardsInHand(self):
+		return self._cards
 
 class Player():
 	name = ''
 	_hand = Hand()
-	def AddCard(self, card):
-		self._hand.cards(card)
-
-	def RemoveCard(self,index):
-		self._hand.cards.remove(index)
-
-	def GetCardsInHand(self):
-		return self._hand.cards
+	
 
 
 
