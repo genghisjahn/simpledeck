@@ -1,7 +1,14 @@
-from deckparts import Deck
+from deckparts import Game,Player
 
-deck=Deck()
-deck.Shuffle(10)
+game = Game()
+game.deck.Shuffle(10)
 
-for c in deck.cards:
-     print(str.format("{} of {}",c.name,c.suit.name))
+p1 = Player()
+p1.name = "Adam"
+
+p2 = Player()
+p2.name = "Brad"
+
+
+#for c in game.deck.cards:
+     #print(str.format("{} of {}",c.name,c.suit.name))
