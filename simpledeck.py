@@ -1,4 +1,4 @@
-from deckparts import Suit,Card,Deck
+from deckparts import Card,Deck
 
 
 
@@ -10,4 +10,6 @@ deck=Deck()
 
 
 deck.Shuffle(10)
+
+
 

@@ -25,7 +25,7 @@ class Hand():
 
 class Player():
 	name = ''
-	_hand = Hand()
+	hand = Hand()
 	
 
 
