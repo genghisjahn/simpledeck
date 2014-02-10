@@ -5,6 +5,7 @@ class Suit():
 	image = ''
 
 class Card():
+	name = ''
 	suit = Suit()
 	value = ''
 	abbr = ''
