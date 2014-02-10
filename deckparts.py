@@ -17,7 +17,15 @@ class Hand():
 
 class Player():
 	name = ''
-	hand = Hand()
+	_hand = Hand()
+	def AddCard(self, card):
+		self._hand.append(card)
+
+	def RemoveCard(self,index):
+		self._hand.remove(index)
+
+	def GetCardsInHand(self):
+		return self._hand
 
 
 
