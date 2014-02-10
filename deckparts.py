@@ -61,7 +61,7 @@ class Deck():
 		     		card.name = str(c)
 		     		card.abbr = str(c)
 
-		     	this.cards.append(card)
+		     	self.cards.append(card)
 
 	def _getsuits(self):
 		suit_h = Suit()
