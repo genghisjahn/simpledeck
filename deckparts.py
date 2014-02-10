@@ -109,6 +109,9 @@ class Game():
 	def AddPlayer(self,player):
 		if len(self._players)<=self._maxplayers and player not in self._players:
 			self._players.append(player)
+		else:
+			if len(self._players)>self._maxplayers:
+				raise Exception(str.format("Max players {} are already in the game.",self._maxplayers))
 
 	def RemovePlayer(self,player):
 		if player in self._players:
