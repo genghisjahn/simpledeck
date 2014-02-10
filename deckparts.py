@@ -101,12 +101,13 @@ class Game():
 	_cardsperhand = 0
 
 	def Setup(self,maxplyrs,crdsperhand):
-		self._maxplayers = maxplyrs
-		self._cardsperhand = crdsperhand
 		if self._maxplayers * self._cardsperhand > 52:
 			raise Exception(str.format("More than 52 cards are required to give {} players {} cards.",maxplyrs,crdsperhand))
 		if crdsperhand<5:
 			raise Exception(str.format("You need at least 5 cards per hand to pla."))
+
+		self._maxplayers = maxplyrs
+		self._cardsperhand = crdsperhand
 
 	def AddPlayer(self,player):
 		if len(self._players)<=self._maxplayers and player not in self._players:
