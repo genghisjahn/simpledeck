@@ -118,3 +118,6 @@ class Game():
 	def RemovePlayer(self,player):
 		if player in self._players:
 			self._players.remove(player)
+
+	def GetPlayers(self):
+		return self._players
