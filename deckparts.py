@@ -19,13 +19,13 @@ class Player():
 	name = ''
 	_hand = Hand()
 	def AddCard(self, card):
-		self._hand.append(card)
+		self._hand.cards(card)
 
 	def RemoveCard(self,index):
-		self._hand.remove(index)
+		self._hand.cards.remove(index)
 
 	def GetCardsInHand(self):
-		return self._hand
+		return self._hand.cards
 
 
 
