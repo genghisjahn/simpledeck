@@ -16,7 +16,7 @@ class Hand():
 	_cards = []
 	score = 0
 	def AddCard(self, card):
-		self._cards(card)
+		self._cards.append(card)
 
 	def RemoveCard(self,index):
 		self._cards.remove(index)
@@ -27,6 +27,8 @@ class Hand():
 class Player():
 	name = ''
 	hand = Hand()
+	def __init__(self):
+		self.hand = Hand()
 	
 class Deck():
 	cards = []
@@ -128,3 +130,10 @@ class Game():
 	def Deal(self):
 		if len(self._players)==0:
 			raise Exception(str.format("You have to add players to deal."))
+
+		_players = self.GetPlayers()
+		for i in range(1,self._cardsperhand+1):
+			for p in _players:
+				card = self.deck.cards[0]
+				p.hand.AddCard(card)
+				self.deck.cards.remove(card)
