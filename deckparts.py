@@ -28,9 +28,6 @@ class Player():
 	name = ''
 	hand = Hand()
 	
-
-
-
 class Deck():
 	cards = []
 
@@ -95,3 +92,20 @@ class Deck():
 		self.cards = shuffled_deck
 		if times-1>0:
 			self.Shuffle(times-1)
+
+class Game():
+	deck = Deck()
+	maxplayers = 0
+
+	_players = []
+
+	def Setup(self,maxplyrs):
+		self.maxplayers = maxplyrs
+		
+	def AddPlayer(self,player):
+		if len(self._players)<=self.maxplayers and player not in self._players:
+			self._players.append(player)
+
+	def RemovePlayer(self,player):
+		if player in self._players:
+			self._players.remove(player)
