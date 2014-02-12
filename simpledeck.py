@@ -18,8 +18,9 @@ def main():
 
 	print game.players
 	for player in game.players:
+		print player
 		for card in player.hand.cards:
-			print "%s - %s" % (player, card)
+			print "%s%s" % (' '*8, card)
 
 
 if __name__ == '__main__':
