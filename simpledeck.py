@@ -1,21 +1,29 @@
 from deckparts import Game, Player
 
-game = Game()
-game.Setup(2, 5)
-game.deck.Shuffle(10)
+def main():
+	game = Game(max_players=4, cards_per_hand=5)
 
-p1 = Player()
-p1.name = "Adam"
+	p1 = Player("Adam")
+	p2 = Player("Brad")
+	p3 = Player("Jerom")
+	p4 = Player("Malik")
 
-p2 = Player()
-p2.name = "Brad"
+	game.add_player(p1)
+	game.add_player(p2)
+	game.add_player(p3)
+	game.add_player(p4)
 
-game.AddPlayer(p1)
-game.AddPlayer(p2)
+	game.deck.shuffle()
+	game.deal()
 
-game.Deal()
-     
-for p in game.GetPlayers():
-    print(str.format("Player {}'s hand:", p.name))
-    for c in p.hand.GetCardsInHand():
-        print(str.format("     {} of {}", c.name, c.suit.name))
+<<<<<<< HEAD
+	print game.players
+	for player in game.players:
+		print player
+		for card in player.hand.cards:
+			print "%s%s" % (' '*8, card)
+
+
+if __name__ == '__main__':
+	main()
+

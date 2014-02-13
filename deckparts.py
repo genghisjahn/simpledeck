@@ -1,152 +1,114 @@
+import itertools
 import random
 
 
-class Suit():
-    name = ''
-    image = ''
+SUITS = set(['Hearts', 'Spades', 'Clubs', 'Diamonds'])
+
+FACE_CARDS = {
+	1: {
+		'name': 'Ace',
+ 		'abbr': 'A',
+ 		'highnum': 14,
+ 		'lownum': 1,
+	},
+	11: {
+		'name': 'Jack',
+		'abbr': 'J',
+ 		'highnum': 11,
+ 		'lownum': 11,
+	},
+	12: {
+		'name': 'Queen',
+		'abbr': 'Q',
+ 		'highnum': 12,
+ 		'lownum': 12,
+	},
+	13: {
+		'name': 'King',
+		'abbr': 'K',
+ 		'highnum': 13,
+ 		'lownum': 13,
+	},
+}
 
 
-class Card():
-    name = ''
-    suit = Suit()
-    value = ''
-    abbr = ''
-    lownum = 0
-    highnum = 0
+class Card(object):
+
+	def __init__(self, suit, name, abbr, high_num, low_num):
+		self.suit = suit
+		self.name = name
+		self.abbr = abbr
+		self.high_num = high_num
+		self.low_num = low_num
+
+	def __unicode__(self):
+		return "{s.suit} {s.name} {s.abbr} {s.high_num} {s.low_num}".format(s=self)
+
+	def __str__(self):
+		return self.__unicode__()
 
 
-class Hand():
-    _cards = []
-    score = 0
+class Hand(object):
 
-    def AddCard(self, card):
-        self._cards.append(card)
+	def __init__(self):
+		self.cards = set()
+		self.score = 0
 
-    def RemoveCard(self, index):
-        self._cards.remove(index)
+	def add_card(self, card):
+		self.cards.add(card)
 
-    def GetCardsInHand(self):
-        return self._cards
-
-
-class Player():
-    name = ''
-    hand = Hand()
-
-    def __init__(self):
-        self.hand = Hand()
+	def remove_card(self, card):
+		self.cards.remove(card)
 
 
-class Deck():
-    cards = []
+class Player(object):
 
-    def __init__(self):
-        self._build()
+	def __init__(self, name):
+		self.name = name
+		self.hand = Hand()
 
-    def _build(self):
-        for s in self._getsuits():
-            for c in range(1, 14):
-                card = Card()
-                card.suit = s
-                card.highnum = c
-                card.lownum = c
-                if c == 1:
-                    card.name = 'Ace'
-                    card.abbr = 'A'
-                    card.highnum = 14
-                    card.lownum = 1
-                elif c == 11:
-                    card.name = 'Jack'
-                    card.abbr = 'J'
-                elif c == 12:
-                    card.name = 'Queen'
-                    card.abbr = 'Q'
-                elif c == 13:
-                    card.name = 'King'
-                    card.abbr = 'K'
-                else:
-                    card.name = str(c)
-                    card.abbr = str(c)
+	def __unicode__(self):
+		return self.name
 
-                self.cards.append(card)
+	def __str__(self):
+		return self.__unicode__()
 
-    def _getsuits(self):
-        suit_h = Suit()
-        suit_h.name = 'Hearts'
-        suit_s = Suit()
-        suit_s.name = 'Spades'
-        suit_c = Suit()
-        suit_c.name = 'Clubs'
-        suit_d = Suit()
-        suit_d.name = 'Diamonds'
-        suits = []
-        suits.append(suit_h)
-        suits.append(suit_s)
-        suits.append(suit_c)
-        suits.append(suit_d)
-        return suits
+class Deck(object):
 
-    def Shuffle(self, times):
-        shuffled_deck = []
-        max_cards = len(self.cards)
-        for i in range(0, max_cards):
-            card_index = random.randint(0, max_cards - 1)
-            shuffle_card = self.cards[card_index]
-            if shuffle_card in self.cards:
-                self.cards.remove(shuffle_card)
-            if shuffle_card in shuffled_deck:
-                raise Exception(
-                    str.format("ERROR -- The {} of {} is already in this deck!", shuffle_card.value, shuffle_card.suit.name))
-            shuffled_deck.append(shuffle_card)
-            max_cards -= 1
-        self.cards = shuffled_deck
-        if times - 1 > 0:
-            self.Shuffle(times - 1)
+	def __init__(self):
+		self.cards = [self._create_card(s, c) for s, c in itertools.product(SUITS,range(1,14))]
+
+	def _create_card(self, suit, value):
+	 	if value in FACE_CARDS:
+			return Card(suit, FACE_CARDS[value]['name'], FACE_CARDS[value]['abbr'],
+	     					   FACE_CARDS[value]['highnum'], FACE_CARDS[value]['lownum'])
+		else:
+			return Card(suit, str(value), str(value), value, value)
+
+	def shuffle(self):
+		random.shuffle(self.cards)
+
+class Game(object):
+
+	def __init__(self, max_players=0, cards_per_hand=0):
+		self.deck = Deck()
+		self.players = set()
+		self.max_players = max_players
+		self.cards_per_hand = cards_per_hand
 
 
-class Game():
-    deck = Deck()
+	def add_player(self, player):
 
-    _maxplayers = 0
-    _players = []
-    _cardsperhand = 0
+		if len(self.players) <= self.max_players:
+			self.players.add(player)
+		else:
+			raise Exception(str.format("Max players {} are already in the game.", self.max_players))
 
-    def Setup(self, maxplyrs, crdsperhand):
-        if self._maxplayers * self._cardsperhand > 52:
-            raise Exception(
-                str.format("More than 52 cards are required to give {} players {} cards.", maxplyrs, crdsperhand))
-        if crdsperhand < 5:
-            raise Exception(
-                str.format("You need at least 5 cards per hand to pla."))
+	def remove_player(self,player):
+		if player in self.players:
+			self.players.remove(player)
 
-        self._maxplayers = maxplyrs
-        self._cardsperhand = crdsperhand
-
-    def AddPlayer(self, player):
-        if len(self._players) <= self._maxplayers and player not in self._players:
-            self._players.append(player)
-        else:
-            if len(self._players) > self._maxplayers:
-                raise Exception(
-                    str.format("Max players {} are already in the game.", self._maxplayers))
-            if player in self._players:
-                raise Exception(
-                    str.format("Player {} has already been added.", player.name))
-
-    def RemovePlayer(self, player):
-        if player in self._players:
-            self._players.remove(player)
-
-    def GetPlayers(self):
-        return self._players
-
-    def Deal(self):
-        if len(self._players) == 0:
-            raise Exception(str.format("You have to add players to deal."))
-
-        _players = self.GetPlayers()
-        for i in range(1, self._cardsperhand + 1):
-            for p in _players:
-                card = self.deck.cards[0]
-                p.hand.AddCard(card)
-                self.deck.cards.remove(card)
+	def deal(self):
+		for i in range(0, self.cards_per_hand):
+			for player in self.players:
+				player.hand.add_card(self.deck.cards.pop())
