@@ -16,7 +16,6 @@ def main():
 	game.deck.shuffle()
 	game.deal()
 
-<<<<<<< HEAD
 	print game.players
 	for player in game.players:
 		print player
