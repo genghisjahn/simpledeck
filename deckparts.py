@@ -1,6 +1,7 @@
 import itertools
 import random
 
+
 SUITS = set(['Hearts', 'Spades', 'Clubs', 'Diamonds'])
 
 FACE_CARDS = {

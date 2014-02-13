@@ -1,4 +1,4 @@
-from deckparts import Game,Player
+from deckparts import Game, Player
 
 def main():
 	game = Game(max_players=4, cards_per_hand=5)
@@ -16,6 +16,7 @@ def main():
 	game.deck.shuffle()
 	game.deal()
 
+<<<<<<< HEAD
 	print game.players
 	for player in game.players:
 		print player
@@ -25,3 +26,4 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
