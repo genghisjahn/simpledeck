@@ -13,16 +13,17 @@ def main():
 	game.add_player(p3)
 	game.add_player(p4)
 
-	#game.deck.shuffle(0)
-	#game.deal()
-	"""
+	game.deck.shuffle(0)
+	game.deal()
+	
 	print game.players
 	for player in game.players:
 		print player
 		for card in player.hand.cards:
 			print "%s%s" % (' '*8, card)
-	"""
-	print_deck(game.deck)
+	
+
+	#print_deck(game.deck)
 
 def print_deck(deck):
 	for card in deck.cards:
