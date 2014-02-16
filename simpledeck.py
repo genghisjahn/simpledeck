@@ -13,15 +13,17 @@ def main():
 	game.add_player(p3)
 	game.add_player(p4)
 
-	game.deck.shuffle()
-	game.deal()
-
+	#game.deck.shuffle(0)
+	#game.deal()
+	"""
 	print game.players
 	for player in game.players:
 		print player
 		for card in player.hand.cards:
 			print "%s%s" % (' '*8, card)
-
+	"""
+	for card in game.deck.cards:
+		print "%s%s" % (' '*8, card)
 
 if __name__ == '__main__':
 	main()

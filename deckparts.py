@@ -42,7 +42,7 @@ class Card(object):
 		self.low_num = low_num
 
 	def __unicode__(self):
-		return "{s.suit} {s.name} {s.abbr} {s.high_num} {s.low_num}".format(s=self)
+		return "{s.name} of {s.suit}".format(s=self)
 
 	def __str__(self):
 		return self.__unicode__()
@@ -85,8 +85,9 @@ class Deck(object):
 		else:
 			return Card(suit, str(value), str(value), value, value)
 
-	def shuffle(self):
-		random.shuffle(self.cards)
+	def shuffle(self,numshuffles):
+		for i in xrange(numshuffles):
+			random.shuffle(self.cards)
 
 class Game(object):
 
