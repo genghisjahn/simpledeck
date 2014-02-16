@@ -22,7 +22,10 @@ def main():
 		for card in player.hand.cards:
 			print "%s%s" % (' '*8, card)
 	"""
-	for card in game.deck.cards:
+	print_deck(game.deck)
+
+def print_deck(deck):
+	for card in deck.cards:
 		print "%s%s" % (' '*8, card)
 
 if __name__ == '__main__':
