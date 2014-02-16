@@ -1,7 +1,7 @@
 from deckparts import Game, Player
 
 def main():
-	game = Game(max_players=4, cards_per_hand=5)
+	game = Game(max_players=4, cards_per_hand=7)
 
 	p1 = Player("Adam")
 	p2 = Player("Brad")
@@ -13,7 +13,7 @@ def main():
 	game.add_player(p3)
 	game.add_player(p4)
 
-	game.deck.shuffle(0)
+	game.deck.shuffle(10)
 	game.deal()
 	
 	print game.players
