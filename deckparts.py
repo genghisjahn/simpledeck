@@ -75,6 +75,15 @@ class Hand(object):
         flush = self._has_flush()
         result.extend(flush)
 
+        straight = self._has_straight()
+        result.extend(straight)
+
+        if pairs and threes:
+            result.append("Full house")
+
+        if straight and flush:
+            result.append("Straight flush")
+
         return result
 
     def _of_a_kind(self, value, score_message):
@@ -108,10 +117,34 @@ class Hand(object):
             if el.suit == value.suit:
                 yield el
 
-    def _is_straight(hand):
-        # use this
-        # http://stackoverflow.com/questions/2429073/check-if-the-integer-in-a-list-is-not-duplicated-and-sequential
-        return False
+    def _has_straight(self):
+        result = []
+        low_nums = []
+        high_nums = []
+        for card in self.cards:
+            low_nums.append(card.low_num)
+            high_nums.append(card.high_num)
+
+        # print(low_nums)
+        # self._sequential_ints(low_nums)
+        if self._sequential_ints(low_nums) or self._sequential_ints(high_nums):
+            result.append("Straight.")
+
+        return result
+
+    def _sequential_ints(self, item_vals):
+        prev = 0
+        result = False
+        item_vals.sort()
+        for i in item_vals:
+            if prev > 0:
+                if i - prev != 1:
+                    break
+            prev = i
+        else:
+            result = True
+
+        return result
 
 
 class Player(object):
