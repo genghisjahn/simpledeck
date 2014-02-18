@@ -64,19 +64,25 @@ class Hand(object):
         result = []
 
         pairs = self._of_a_kind(2, "Pair of")
-        result.extend(pairs)
-
         threes = self._of_a_kind(3, "Three of a kind, three ")
-        result.extend(threes)
-
         fours = self._of_a_kind(4, "Four of a kind, four ")
+        straight = self._has_straight()
+        flush = self._has_flush()
+        if len(pairs) == 2:
+            result.append("Two pair")
+        elif pairs and not threes == 1:
+            result.extend(pairs)
+
+        if not pairs:
+            result.extend(threes)
+
         result.extend(fours)
 
-        flush = self._has_flush()
-        result.extend(flush)
+        if not straight:
+            result.extend(flush)
 
-        straight = self._has_straight()
-        result.extend(straight)
+        if not flush:
+            result.extend(straight)
 
         if pairs and threes:
             result.append("Full house")
@@ -101,7 +107,7 @@ class Hand(object):
         for card in self.cards:
             flush_present = self._filterbysuit(self.cards, card)
             if len(list(flush_present)) == 5:
-                new_val = str.format("{} flush.", card.suit)
+                new_val = str.format("Flush {}", card.suit)
                 if not new_val in result:
                     result.append(new_val)
                     break
@@ -125,8 +131,6 @@ class Hand(object):
             low_nums.append(card.low_num)
             high_nums.append(card.high_num)
 
-        # print(low_nums)
-        # self._sequential_ints(low_nums)
         if self._sequential_ints(low_nums) or self._sequential_ints(high_nums):
             result.append("Straight.")
 
