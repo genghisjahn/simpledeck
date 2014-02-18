@@ -12,9 +12,9 @@ def main():
         p4 = Player("Malik")
 
         game.add_player(p1)
-        game.add_player(p2)
-        game.add_player(p3)
-        game.add_player(p4)
+        # game.add_player(p2)
+        # game.add_player(p3)
+        # game.add_player(p4)
 
         game.deck.shuffle(10)
         game.deal()
@@ -27,7 +27,7 @@ def main():
 
             for p in player.hand.scorehand():
                 print str.format("score: {}", p)
-                if p.startswith('Four of a kind'):
+                if p.endswith('flush.'):
                     found_flag = True
                     break
 

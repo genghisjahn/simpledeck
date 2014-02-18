@@ -72,6 +72,9 @@ class Hand(object):
         fours = self._of_a_kind(4, "Four of a kind, four ")
         result.extend(fours)
 
+        flush = self._has_flush()
+        result.extend(flush)
+
         return result
 
     def _of_a_kind(self, value, score_message):
@@ -84,31 +87,25 @@ class Hand(object):
                     result.append(new_val)
         return result
 
-    def _has_pair(self):
+    def _has_flush(self):
         result = []
         for card in self.cards:
-            pair_present = self._filterbyvalue(self.cards, card)
-            if len(list(pair_present)) == 2:
-                new_val = str.format("Pair of {}s", card.name)
+            flush_present = self._filterbysuit(self.cards, card)
+            if len(list(flush_present)) == 5:
+                new_val = str.format("{} flush.", card.suit)
                 if not new_val in result:
                     result.append(new_val)
-
-        return result
-
-    def _has_three_of_kind(self):
-        result = []
-        for card in self.cards:
-            three_present = self._filterbyvalue(self.cards, card)
-            if len(list(three_present)) == 3:
-                new_val = str.format("Three of a kind - {}s", card.name)
-                if not new_val in result:
-                    result.append(new_val)
-
+                    break
         return result
 
     def _filterbyvalue(self, seq, value):
         for el in seq:
             if el.high_num == value.high_num:
+                yield el
+
+    def _filterbysuit(self, seq, value):
+        for el in seq:
+            if el.suit == value.suit:
                 yield el
 
     def _is_straight(hand):
