@@ -60,6 +60,62 @@ class Hand(object):
     def remove_card(self, card):
         self.cards.remove(card)
 
+    def scorehand(self):
+        result = []
+
+        pairs = self._of_a_kind(2, "Pair of")
+        result.extend(pairs)
+
+        threes = self._of_a_kind(3, "Three of a kind, three ")
+        result.extend(threes)
+
+        fours = self._of_a_kind(4, "Four of a kind, four ")
+        result.extend(fours)
+
+        return result
+
+    def _of_a_kind(self, value, score_message):
+        result = []
+        for card in self.cards:
+            kind_present = self._filterbyvalue(self.cards, card)
+            if len(list(kind_present)) == value:
+                new_val = str.format("{} {}s.", score_message, card.name)
+                if not new_val in result:
+                    result.append(new_val)
+        return result
+
+    def _has_pair(self):
+        result = []
+        for card in self.cards:
+            pair_present = self._filterbyvalue(self.cards, card)
+            if len(list(pair_present)) == 2:
+                new_val = str.format("Pair of {}s", card.name)
+                if not new_val in result:
+                    result.append(new_val)
+
+        return result
+
+    def _has_three_of_kind(self):
+        result = []
+        for card in self.cards:
+            three_present = self._filterbyvalue(self.cards, card)
+            if len(list(three_present)) == 3:
+                new_val = str.format("Three of a kind - {}s", card.name)
+                if not new_val in result:
+                    result.append(new_val)
+
+        return result
+
+    def _filterbyvalue(self, seq, value):
+        for el in seq:
+            if el.high_num == value.high_num:
+                yield el
+
+    def _is_straight(hand):
+        # use this
+        # http://stackoverflow.com/questions/2429073/check-if-the-integer-in-a-list-is-not-duplicated-and-sequential
+        return False
+
 
 class Player(object):
 
@@ -115,28 +171,3 @@ class Game(object):
         for i in range(0, self.cards_per_hand):
             for player in self.players:
                 player.hand.add_card(self.deck.cards.pop())
-
-    def scorehand(this, hand):
-        if this._has_pair(hand):
-            return "Has at least 1 pair!"
-        else:
-            return "No pairs found."
-
-    def _has_pair(this, hand):
-        result = []
-        for card in hand.cards:
-            pair_present = this._filterbyvalue(hand.cards, card)
-            if len(list(pair_present)) == 2:
-                result.append(card.high_num)
-
-        return result
-
-    def _is_straight(hand):
-        # use this
-        # http://stackoverflow.com/questions/2429073/check-if-the-integer-in-a-list-is-not-duplicated-and-sequential
-        return False
-
-    def _filterbyvalue(self, seq, value):
-        for el in seq:
-            if el.high_num == value.high_num:
-                yield el
