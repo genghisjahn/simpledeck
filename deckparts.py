@@ -137,19 +137,8 @@ class Hand(object):
         return result
 
     def _sequential_ints(self, item_vals):
-        prev = 0
-        result = False
         item_vals.sort()
-        for i in item_vals:
-            if prev > 0:
-                if i - prev != 1:
-                    break
-            prev = i
-        else:
-            result = True
-
-        return result
-
+        return len(item_vals) == len(set(item_vals)) == item_vals[-1] - item_vals[0] + 1
 
 class Player(object):
 
