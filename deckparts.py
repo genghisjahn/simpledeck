@@ -3,6 +3,8 @@ import random
 
 
 SUITS = set(['Hearts', 'Spades', 'Clubs', 'Diamonds'])
+HAND_RESULTS = set([('High Card', 10), ('Pair', 20), ('Two Pair', 30), ('Three of a Kind', 40), ('Straight', 50)
+                   ('Flush', 60), ('Full House', 70), ('Four of a Kind', 80), ('Straight Flush', 90), ('Royal Flush', 100)])
 
 FACE_CARDS = {
     1: {
@@ -61,13 +63,25 @@ class Hand(object):
         self.cards.remove(card)
 
     def scorehand(self):
+        combos = list(itertools.combinations(self.cards, 5))
+        for combo in combos:
+            self.scorehand_5(combo)
+            for card in combo:
+                print(card)
+            print("-" * 10)
+
+        #print(str.format("combo: {}", len(perms)))
+        raise SystemExit
+        return self.scorehand_5(combo)
+
+    def scorehand_5(self, card5):
         result = []
 
-        pairs = self._of_a_kind(2, "Pair of")
-        threes = self._of_a_kind(3, "Three of a kind, three ")
-        fours = self._of_a_kind(4, "Four of a kind, four ")
-        straight = self._has_straight()
-        flush = self._has_flush()
+        pairs = self._of_a_kind(card5, 2, "Pair of")
+        threes = self._of_a_kind(card5, 3, "Three of a kind, three ")
+        fours = self._of_a_kind(card5, 4, "Four of a kind, four ")
+        straight = self._has_straight(card5)
+        flush = self._has_flush(card5)
         if len(pairs) == 2:
             result.append("Two pair")
         elif pairs and not threes == 1:
@@ -93,11 +107,15 @@ class Hand(object):
         if straight and flush:
             result.append("Straight flush")
 
+        """
+        
+        """
+
         return result
 
-    def _of_a_kind(self, value, score_message):
+    def _of_a_kind(self, card5, value, score_message):
         result = []
-        for card in self.cards:
+        for card in card5:
             kind_present = self._filterbyvalue(self.cards, card)
             if len(list(kind_present)) == value:
                 new_val = str.format("{} {}s.", score_message, card.name)
@@ -105,9 +123,9 @@ class Hand(object):
                     result.append(new_val)
         return result
 
-    def _has_flush(self):
+    def _has_flush(self, card5):
         result = []
-        for card in self.cards:
+        for card in card5:
             flush_present = self._filterbysuit(self.cards, card)
             if len(list(flush_present)) == 5:
                 new_val = str.format("Flush {}", card.suit)
@@ -126,11 +144,11 @@ class Hand(object):
             if el.suit == value.suit:
                 yield el
 
-    def _has_straight(self):
+    def _has_straight(self, card5):
         result = []
         low_nums = []
         high_nums = []
-        for card in self.cards:
+        for card in card5:
             low_nums.append(card.low_num)
             high_nums.append(card.high_num)
 
