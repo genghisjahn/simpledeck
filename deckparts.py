@@ -3,6 +3,8 @@ import random
 
 
 SUITS = set(['Hearts', 'Spades', 'Clubs', 'Diamonds'])
+HAND_RESULTS = set([('High Card', 10), ('Pair', 20), ('Two Pair', 30), ('Three of a Kind', 40), ('Straight', 50)
+                   ('Flush', 60), ('Full House', 70), ('Four of a Kind', 80), ('Straight Flush', 90), ('Royal Flush', 100)])
 
 FACE_CARDS = {
     1: {
@@ -104,6 +106,10 @@ class Hand(object):
 
         if straight and flush:
             result.append("Straight flush")
+
+        """
+        
+        """
 
         return result
 
