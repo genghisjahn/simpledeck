@@ -3,8 +3,9 @@ import random
 
 
 SUITS = set(['Hearts', 'Spades', 'Clubs', 'Diamonds'])
-HAND_RESULTS = set([('High Card', 10), ('Pair', 20), ('Two Pair', 30), ('Three of a Kind', 40), ('Straight', 50)
-                   ('Flush', 60), ('Full House', 70), ('Four of a Kind', 80), ('Straight Flush', 90), ('Royal Flush', 100)])
+HAND_RESULTS = [(
+    'High Card', 10), ('Pair', 20), ('Two Pair', 30), ('Three of a Kind', 40), ('Straight', 50),
+    ('Flush', 60), ('Full House', 70), ('Four of a Kind', 80), ('Straight Flush', 90), ('Royal Flush', 100)]
 
 FACE_CARDS = {
     1: {
@@ -64,15 +65,13 @@ class Hand(object):
 
     def scorehand(self):
         combos = list(itertools.combinations(self.cards, 5))
+        highest = 0
         for combo in combos:
-            self.scorehand_5(combo)
-            for card in combo:
-                print(card)
-            print("-" * 10)
+            current = self.scorehand_5(combo)
+            if current > highest:
+                highest = current
 
-        #print(str.format("combo: {}", len(perms)))
-        raise SystemExit
-        return self.scorehand_5(combo)
+        return highest
 
     def scorehand_5(self, card5):
         result = []

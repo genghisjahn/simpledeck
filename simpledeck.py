@@ -25,12 +25,17 @@ def main():
             for card in player.hand.cards:
                 print "%s%s" % (' ' * 8, card)
 
+            score = player.hand.scorehand()
+            print str.format("score: {}", score)
+            if str(score[0]).startswith('Three'):
+                break
+            """
             for p in player.hand.scorehand():
                 print str.format("score: {}", p)
                 if p.startswith('Straight'):
                     found_flag = True
                     break
-
+            """
             if found_flag == True:
                 break
             print "-" * 10
