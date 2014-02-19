@@ -78,6 +78,9 @@ class Hand(object):
 
         result.extend(fours)
 
+        # No need to check this if there
+        # is another scored hand
+
         if not straight:
             result.extend(flush)
 
@@ -138,6 +141,7 @@ class Hand(object):
 
     def _sequential_ints(self, item_vals):
         return len(item_vals) == len(set(item_vals)) == max(item_vals) - min(item_vals) + 1
+
 
 class Player(object):
 
