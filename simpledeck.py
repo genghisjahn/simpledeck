@@ -4,7 +4,7 @@ from deckparts import Game, Player
 def main():
 
     while True:
-        game = Game(max_players=4, cards_per_hand=5)
+        game = Game(max_players=4, cards_per_hand=7)
 
         p1 = Player("Adam")
         p2 = Player("Brad")
