@@ -83,33 +83,31 @@ class Hand(object):
         straight = self._has_straight(card5)
         flush = self._has_flush(card5)
         if len(pairs) == 2:
-            result.append("Two pair")
+            result.append(HAND_RESULTS[2])
         elif pairs and not threes == 1:
-            result.extend(pairs)
+            result.extend(HAND_RESULTS[1])
 
         if not pairs:
-            result.extend(threes)
+            result.extend(HAND_RESULTS[3])
 
-        result.extend(fours)
+        result.extend(HAND_RESULTS[7])
 
         # No need to check this if there
         # is another scored hand
 
         if not straight:
-            result.extend(flush)
+            result.extend(HAND_RESULTS[4])
 
         if not flush:
-            result.extend(straight)
+            result.extend(HAND_RESULTS[5])
 
         if pairs and threes:
-            result.append("Full house")
+            result = []
+            result.append(HAND_RESULTS[6])
 
         if straight and flush:
-            result.append("Straight flush")
-
-        """
-        
-        """
+            result = []
+            result.append(HAND_RESULTS[8])
 
         return result
 
