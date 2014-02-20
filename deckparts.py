@@ -74,7 +74,7 @@ class Hand(object):
         return highest
 
     def scorehand_5(self, card5):
-        result = None
+        result = HAND_RESULTS[0]
 
         pairs = self._of_a_kind(card5, 2, "Pair of")
         threes = self._of_a_kind(card5, 3, "Three of a kind, three ")
@@ -95,18 +95,16 @@ class Hand(object):
         # No need to check this if there
         # is another scored hand
 
-        if not straight:
+        if straight:
             result = HAND_RESULTS[4]
 
-        if not flush:
+        if flush:
             result = HAND_RESULTS[5]
 
         if pairs and threes:
-            result = None
             result = HAND_RESULTS[6]
 
         if straight and flush:
-            result = None
             result = HAND_RESULTS[8]
 
 

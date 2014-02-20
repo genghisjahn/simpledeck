@@ -26,9 +26,11 @@ def main():
                 print "%s%s" % (' ' * 8, card)
 
             score = player.hand.scorehand()
-            print str.format("score: {}", score)
-            if str(score[0]).startswith('Three'):
+            print str.format("score: {}", score[0])
+            if str(score[0]).startswith('Two Pair'):
+                found_flag = True
                 break
+
             """
             for p in player.hand.scorehand():
                 print str.format("score: {}", p)
