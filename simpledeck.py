@@ -31,13 +31,6 @@ def main():
                 found_flag = True
                 break
 
-            """
-            for p in player.hand.scorehand():
-                print str.format("score: {}", p)
-                if p.startswith('Straight'):
-                    found_flag = True
-                    break
-            """
             if found_flag == True:
                 break
             print "-" * 10
