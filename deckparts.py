@@ -3,8 +3,9 @@ import random
 
 
 SUITS = set(['Hearts', 'Spades', 'Clubs', 'Diamonds'])
-HAND_RESULTS = set([('High Card', 10), ('Pair', 20), ('Two Pair', 30), ('Three of a Kind', 40), ('Straight', 50)
-                   ('Flush', 60), ('Full House', 70), ('Four of a Kind', 80), ('Straight Flush', 90), ('Royal Flush', 100)])
+HAND_RESULTS = [(
+    'High Card', 10), ('Pair', 20), ('Two Pair', 30), ('Three of a Kind', 40), ('Straight', 50),
+    ('Flush', 60), ('Full House', 70), ('Four of a Kind', 80), ('Straight Flush', 90), ('Royal Flush', 100)]
 
 FACE_CARDS = {
     1: {
@@ -64,18 +65,16 @@ class Hand(object):
 
     def scorehand(self):
         combos = list(itertools.combinations(self.cards, 5))
+        highest = 0
         for combo in combos:
-            self.scorehand_5(combo)
-            for card in combo:
-                print(card)
-            print("-" * 10)
+            current = self.scorehand_5(combo)
+            if current > highest:
+                highest = current
 
-        #print(str.format("combo: {}", len(perms)))
-        raise SystemExit
-        return self.scorehand_5(combo)
+        return highest
 
     def scorehand_5(self, card5):
-        result = []
+        result = HAND_RESULTS[0]
 
         pairs = self._of_a_kind(card5, 2, "Pair of")
         threes = self._of_a_kind(card5, 3, "Three of a kind, three ")
@@ -83,33 +82,31 @@ class Hand(object):
         straight = self._has_straight(card5)
         flush = self._has_flush(card5)
         if len(pairs) == 2:
-            result.append("Two pair")
+            result = HAND_RESULTS[2]
         elif pairs and not threes == 1:
-            result.extend(pairs)
+            result = HAND_RESULTS[1]
 
-        if not pairs:
-            result.extend(threes)
+        if not pairs and threes:
+            result = HAND_RESULTS[3]
 
-        result.extend(fours)
+        if fours:
+            result = HAND_RESULTS[7]
 
         # No need to check this if there
         # is another scored hand
 
-        if not straight:
-            result.extend(flush)
+        if straight:
+            result = HAND_RESULTS[4]
 
-        if not flush:
-            result.extend(straight)
+        if flush:
+            result = HAND_RESULTS[5]
 
         if pairs and threes:
-            result.append("Full house")
+            result = HAND_RESULTS[6]
 
         if straight and flush:
-            result.append("Straight flush")
+            result = HAND_RESULTS[8]
 
-        """
-        
-        """
 
         return result
 

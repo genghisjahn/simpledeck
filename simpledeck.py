@@ -25,11 +25,11 @@ def main():
             for card in player.hand.cards:
                 print "%s%s" % (' ' * 8, card)
 
-            for p in player.hand.scorehand():
-                print str.format("score: {}", p)
-                if p.startswith('Straight'):
-                    found_flag = True
-                    break
+            score = player.hand.scorehand()
+            print str.format("score: {}", score[0])
+            if str(score[0]).startswith('Two Pair'):
+                found_flag = True
+                break
 
             if found_flag == True:
                 break
