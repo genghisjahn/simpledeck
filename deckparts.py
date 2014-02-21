@@ -73,11 +73,14 @@ class Hand(object):
                 highest = current
                 highest_hand = combo
             if current == highest:
-                highest = self.comparesame(combo,highest_hand,highest)
+                highest = self._comparesame(combo,highest_hand,highest)
 
         return highest
 
-    def comparesame(self,hand1,hand2,score):
+    def _comparesame(self,hand1,hand2,score):
+        result = hand1
+        if score==10:
+            result = self._dif_high_card(hand1,hand2)
         """
         10 is highscard
         20 is pair
@@ -90,8 +93,13 @@ class Hand(object):
         90 is straight flush
         100 is Royal flush
         """
-        return 0 
+        return result
 
+    def _dif_high_card(self,hand1,hand2):
+        result = hand1
+
+
+        return result
 
     def scorehand_5(self, card5):
         result = HAND_RESULTS[0]

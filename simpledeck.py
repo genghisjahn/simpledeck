@@ -27,7 +27,7 @@ def main():
 
             score = player.hand.scorehand()
             print str.format("score: {}", score[0])
-            if str(score[0]).startswith('Straight Flush'):
+            if str(score[0]).startswith('High'):
                 found_flag = True
                 break
 
