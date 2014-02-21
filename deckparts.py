@@ -115,6 +115,10 @@ class Hand(object):
 
         return result
 
+    def _print_5_card_hand(self,hand):
+        for card in hand.cards:
+            print "%s%s" % (' ' * 8, card)
+
     def scorehand_5(self, card5):
         result = HAND_RESULTS[0]
 
