@@ -109,6 +109,8 @@ class Hand(object):
             elif card_hand1.high_num<card_hand2.high_num:
                 result = hand2
                 break
+        else:
+            return "It's a tie!"
 
 
         return result
