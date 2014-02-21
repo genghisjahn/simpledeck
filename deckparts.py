@@ -69,13 +69,14 @@ class Hand(object):
         highest = 0
         highest_hand = combos[0]
         for combo in combos:
+            print('*' * 10)
             current = self.scorehand_5(combo)
+            self._print_5_card_hand(combo)
             if current > highest:
                 highest = current
                 highest_hand = combo
             else:
                 if current == highest:
-                    # pass
                     highest = self._compare_same(combo,highest_hand,highest)
 
         return highest
@@ -116,7 +117,8 @@ class Hand(object):
         return result
 
     def _print_5_card_hand(self,hand):
-        for card in hand.cards:
+        print ('-' * 10)
+        for card in hand:
             print "%s%s" % (' ' * 8, card)
 
     def scorehand_5(self, card5):
