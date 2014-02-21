@@ -10,27 +10,27 @@ HAND_RESULTS = [(
 FACE_CARDS = {
     1: {
         'name': 'Ace',
-                'abbr': 'A',
-                'highnum': 14,
-                'lownum': 1,
+        'abbr': 'A',
+        'highnum': 14,
+        'lownum': 1,
     },
     11: {
         'name': 'Jack',
-                'abbr': 'J',
-                'highnum': 11,
-                'lownum': 11,
+        'abbr': 'J',
+        'highnum': 11,
+        'lownum': 11,
     },
     12: {
         'name': 'Queen',
-                'abbr': 'Q',
-                'highnum': 12,
-                'lownum': 12,
+        'abbr': 'Q',
+        'highnum': 12,
+        'lownum': 12,
     },
     13: {
         'name': 'King',
-                'abbr': 'K',
-                'highnum': 13,
-                'lownum': 13,
+        'abbr': 'K',
+        'highnum': 13,
+        'lownum': 13,
     },
 }
 
@@ -66,12 +66,20 @@ class Hand(object):
     def scorehand(self):
         combos = list(itertools.combinations(self.cards, 5))
         highest = 0
+        highest_hand = combos[0]
         for combo in combos:
             current = self.scorehand_5(combo)
             if current > highest:
                 highest = current
+                highest_hand = combo
+            if current == highest:
+                highest = self.comparesame(combo,highest_hand,highest)
 
         return highest
+
+    def comparesame(self,hand1,hand2,score):
+        return 0 
+
 
     def scorehand_5(self, card5):
         result = HAND_RESULTS[0]
@@ -106,7 +114,6 @@ class Hand(object):
 
         if straight and flush:
             result = HAND_RESULTS[8]
-
 
         return result
 
