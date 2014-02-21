@@ -76,11 +76,11 @@ class Hand(object):
             else:
                 if current == highest:
                     # pass
-                    highest = self._comparesame(combo,highest_hand,highest)
+                    highest = self._compare_same(combo,highest_hand,highest)
 
         return highest
 
-    def _comparesame(self,hand1,hand2,score):
+    def _compare_same(self,hand1,hand2,score):
         result = hand1
         if score==10:
             result = self._dif_high_card(hand1,hand2)
