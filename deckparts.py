@@ -78,6 +78,18 @@ class Hand(object):
         return highest
 
     def comparesame(self,hand1,hand2,score):
+        """
+        10 is highscard
+        20 is pair
+        30 is two pair
+        40 is three of kind
+        50 is straight
+        60 is flush
+        70 is full House
+        80 is four of kind
+        90 is straight flush
+        100 is Royal flush
+        """
         return 0 
 
 
