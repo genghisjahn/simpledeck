@@ -1,5 +1,6 @@
 import itertools
 import random
+import operator
 
 
 SUITS = set(['Hearts', 'Spades', 'Clubs', 'Diamonds'])
@@ -72,8 +73,10 @@ class Hand(object):
             if current > highest:
                 highest = current
                 highest_hand = combo
-            if current == highest:
-                highest = self._comparesame(combo,highest_hand,highest)
+            else:
+                if current == highest:
+                    # pass
+                    highest = self._comparesame(combo,highest_hand,highest)
 
         return highest
 
@@ -97,6 +100,9 @@ class Hand(object):
 
     def _dif_high_card(self,hand1,hand2):
         result = hand1
+        hand1.sort(key=operator.itemgetter(Hand.high_num))
+        hand2.sort(key=operator.itemgetter(Hand.high_num))
+
 
 
         return result
