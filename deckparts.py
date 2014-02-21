@@ -102,7 +102,13 @@ class Hand(object):
         result = hand1
         hand1.sort(key=operator.itemgetter(Hand.high_num))
         hand2.sort(key=operator.itemgetter(Hand.high_num))
-
+        for card_hand1,card_hand2 in hand1,hand2:
+            if card_hand1.high_num>card_hand2.high_num:
+                result = hand1
+                break
+            elif card_hand1.high_num<card_hand2.high_num:
+                result = hand2
+                break
 
 
         return result
