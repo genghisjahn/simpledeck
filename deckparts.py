@@ -77,14 +77,14 @@ class Hand(object):
                 highest_hand = combo
             else:
                 if current == highest:
-                    highest = self._compare_same(combo,highest_hand,highest)
+                    highest = self._compare_same(combo, highest_hand, highest)
 
         return highest
 
-    def _compare_same(self,hand1,hand2,score):
+    def _compare_same(self, hand1, hand2, score):
         result = hand1
-        if score==10:
-            result = self._dif_high_card(hand1,hand2)
+        if score == 10:
+            result = self._dif_high_card(hand1, hand2)
         """
         10 is highscard
         20 is pair
@@ -99,24 +99,53 @@ class Hand(object):
         """
         return result
 
-    def _dif_high_card(self,hand1,hand2):
+    def _dif_high_card(self, hand1, hand2):
         result = hand1
         hand1.sort(key=operator.itemgetter(Hand.high_num))
         hand2.sort(key=operator.itemgetter(Hand.high_num))
-        for card_hand1,card_hand2 in hand1,hand2:
-            if card_hand1.high_num>card_hand2.high_num:
+        for card_hand1, card_hand2 in hand1, hand2:
+            if card_hand1.high_num > card_hand2.high_num:
                 result = hand1
                 break
-            elif card_hand1.high_num<card_hand2.high_num:
+            elif card_hand1.high_num < card_hand2.high_num:
                 result = hand2
                 break
         else:
             return "It's a tie!"
 
-
         return result
 
-    def _print_5_card_hand(self,hand):
+    def _dif_pair(self, hand1, hand2):
+        result = hand1
+        # get the two cards that comprise the pair of each hand.
+        # compare them, if one is higher, it is the winner.
+        # if they are the same, then remove the pairs from each hand
+        # so that there are only three left.  Then run the _dif_high_card
+        # function to determine who has the highest kicker.
+        # if all three kicker cards are equal, then throw tie exception for now.
+        return hand1
+
+    def _dif_two_pair(self, hand1, hand2):
+        result = hand1
+        # get pairs from each hand.
+        # compare the highest pair from each hand, highest wins.
+        # if they are same rank, compare the lesser pair from each hand, highest wins.
+        # if they are the same, compare remaining kicker card, higher kicker wins.
+        # if top pair, bottom pair and kicker are equal, throw tie excetion.
+        return result
+
+    def _dif_three_kind(self, hand1, hand2):
+        result = hand1
+        # same as _dif_pair only pull the three matching value cards and if tie,
+        # compare the two remaining kickers.
+        retrun result
+
+    def _dif_flush(self, hand1, hand2):
+        # If both hands are flushes, then just get the
+        # flush with the highest card(s).
+        return self._dif_high_card(hand1, hand2)
+
+    def _print_5_card_hand(self, hand):
         print ('-' * 10)
         for card in hand:
             print "%s%s" % (' ' * 8, card)
