@@ -75,12 +75,18 @@ class Hand(object):
                 highest = current
                 highest_hand = combo
 
-        return highest
+            if current == highest:
+                highest_hand = self._compare_same(highest_hand, combo, highest)
+
+        return (highest, highest_hand)
 
     def _compare_same(self, hand1, hand2, score):
         result = hand1
         if score[1] == 10:
-            result = self._dif_high_card(hand1, hand2)
+            # self._print_5_card_hand(hand1)
+            # print(type(list(hand1)))
+            # print(type(hand2))
+            result = self._dif_high_card(list(hand1), list(hand2))
         """
         10 is highscard
         20 is pair
@@ -97,9 +103,9 @@ class Hand(object):
 
     def _dif_high_card(self, hand1, hand2):
         result = hand1
-        hand1.cards.sort(key=operator.itemgetter(Card.high_num))
-        hand2.cards.sort(key=operator.itemgetter(Card.high_num))
-        for card_hand1, card_hand2 in hand1, hand2:
+        hand1.sort(key=operator.attrgetter("high_num"), reverse=True)
+        hand2.sort(key=operator.attrgetter("high_num"), reverse=True)
+        for card_hand1, card_hand2 in zip(hand1, hand2):
             if card_hand1.high_num > card_hand2.high_num:
                 result = hand1
                 break
@@ -107,7 +113,8 @@ class Hand(object):
                 result = hand2
                 break
         else:
-            return "It's a tie!"  # this should throw an excpetion
+            pass
+            # return "It's a tie!"  # this should throw an excpetion
 
         return result
 

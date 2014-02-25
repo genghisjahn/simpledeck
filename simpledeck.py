@@ -23,11 +23,14 @@ def main():
 
             print player
             for card in player.hand.cards:
-                print "%s%s" % (' ' * 8, card)
+                print "%s%s" % (' ' * 5, card)
 
             score = player.hand.scorehand()
+            for card in score[1]:
+                print "%s%s" % (' ' * 8, card)
+
             print str.format("score: {}", score[0])
-            if str(score[0]).startswith('High'):
+            if str(score[0][0]).startswith('High'):
                 found_flag = True
                 break
 
