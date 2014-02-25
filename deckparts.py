@@ -138,7 +138,7 @@ class Hand(object):
         result = hand1
         # same as _dif_pair only pull the three matching value cards and if tie,
         # compare the two remaining kickers.
-        retrun result
+        return result
 
     def _dif_flush(self, hand1, hand2):
         # If both hands are flushes, then just get the
