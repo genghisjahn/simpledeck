@@ -74,12 +74,7 @@ class Hand(object):
             if current > highest:
                 highest = current
                 highest_hand = combo
-            else:
-                if current == highest:
-                    highest = current
-                    highest_hand = self._compare_same(combo, highest_hand, highest)
 
-        # self._print_5_card_hand(highest_hand)
         return highest
 
     def _compare_same(self, hand1, hand2, score):
@@ -102,8 +97,8 @@ class Hand(object):
 
     def _dif_high_card(self, hand1, hand2):
         result = hand1
-        hand1.sort(key=operator.itemgetter(Hand.high_num))
-        hand2.sort(key=operator.itemgetter(Hand.high_num))
+        hand1.cards.sort(key=operator.itemgetter(Card.high_num))
+        hand2.cards.sort(key=operator.itemgetter(Card.high_num))
         for card_hand1, card_hand2 in hand1, hand2:
             if card_hand1.high_num > card_hand2.high_num:
                 result = hand1
