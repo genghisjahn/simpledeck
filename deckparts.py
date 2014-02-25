@@ -69,21 +69,22 @@ class Hand(object):
         highest = 0
         highest_hand = combos[0]
         for combo in combos:
-            print('*' * 10)
             current = self.scorehand_5(combo)
-            self._print_5_card_hand(combo)
+
             if current > highest:
                 highest = current
                 highest_hand = combo
             else:
                 if current == highest:
-                    highest = self._compare_same(combo, highest_hand, highest)
+                    highest = current
+                    highest_hand = self._compare_same(combo, highest_hand, highest)
 
+        # self._print_5_card_hand(highest_hand)
         return highest
 
     def _compare_same(self, hand1, hand2, score):
         result = hand1
-        if score == 10:
+        if score[1] == 10:
             result = self._dif_high_card(hand1, hand2)
         """
         10 is highscard
@@ -111,7 +112,7 @@ class Hand(object):
                 result = hand2
                 break
         else:
-            return "It's a tie!"
+            return "It's a tie!"  # this should throw an excpetion
 
         return result
 
