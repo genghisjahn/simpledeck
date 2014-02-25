@@ -1,5 +1,6 @@
 import itertools
 import random
+import operator
 
 
 SUITS = set(['Hearts', 'Spades', 'Clubs', 'Diamonds'])
@@ -10,27 +11,27 @@ HAND_RESULTS = [(
 FACE_CARDS = {
     1: {
         'name': 'Ace',
-                'abbr': 'A',
-                'highnum': 14,
-                'lownum': 1,
+        'abbr': 'A',
+        'highnum': 14,
+        'lownum': 1,
     },
     11: {
         'name': 'Jack',
-                'abbr': 'J',
-                'highnum': 11,
-                'lownum': 11,
+        'abbr': 'J',
+        'highnum': 11,
+        'lownum': 11,
     },
     12: {
         'name': 'Queen',
-                'abbr': 'Q',
-                'highnum': 12,
-                'lownum': 12,
+        'abbr': 'Q',
+        'highnum': 12,
+        'lownum': 12,
     },
     13: {
         'name': 'King',
-                'abbr': 'K',
-                'highnum': 13,
-                'lownum': 13,
+        'abbr': 'K',
+        'highnum': 13,
+        'lownum': 13,
     },
 }
 
@@ -66,12 +67,91 @@ class Hand(object):
     def scorehand(self):
         combos = list(itertools.combinations(self.cards, 5))
         highest = 0
+        highest_hand = combos[0]
         for combo in combos:
             current = self.scorehand_5(combo)
+
             if current > highest:
                 highest = current
+                highest_hand = combo
 
-        return highest
+            if current == highest:
+                highest_hand = self._compare_same(highest_hand, combo, highest)
+
+        return (highest, highest_hand)
+
+    def _compare_same(self, hand1, hand2, score):
+        result = hand1
+        if score[1] == 10:
+            # self._print_5_card_hand(hand1)
+            # print(type(list(hand1)))
+            # print(type(hand2))
+            result = self._dif_high_card(list(hand1), list(hand2))
+        """
+        10 is highscard
+        20 is pair
+        30 is two pair
+        40 is three of kind
+        50 is straight
+        60 is flush
+        70 is full House
+        80 is four of kind
+        90 is straight flush
+        100 is Royal flush
+        """
+        return result
+
+    def _dif_high_card(self, hand1, hand2):
+        result = hand1
+        hand1.sort(key=operator.attrgetter("high_num"), reverse=True)
+        hand2.sort(key=operator.attrgetter("high_num"), reverse=True)
+        for card_hand1, card_hand2 in zip(hand1, hand2):
+            if card_hand1.high_num > card_hand2.high_num:
+                result = hand1
+                break
+            elif card_hand1.high_num < card_hand2.high_num:
+                result = hand2
+                break
+        else:
+            pass
+            # return "It's a tie!"  # this should throw an excpetion
+
+        return result
+
+    def _dif_pair(self, hand1, hand2):
+        result = hand1
+        # get the two cards that comprise the pair of each hand.
+        # compare them, if one is higher, it is the winner.
+        # if they are the same, then remove the pairs from each hand
+        # so that there are only three left.  Then run the _dif_high_card
+        # function to determine who has the highest kicker.
+        # if all three kicker cards are equal, then throw tie exception for now.
+        return hand1
+
+    def _dif_two_pair(self, hand1, hand2):
+        result = hand1
+        # get pairs from each hand.
+        # compare the highest pair from each hand, highest wins.
+        # if they are same rank, compare the lesser pair from each hand, highest wins.
+        # if they are the same, compare remaining kicker card, higher kicker wins.
+        # if top pair, bottom pair and kicker are equal, throw tie excetion.
+        return result
+
+    def _dif_three_kind(self, hand1, hand2):
+        result = hand1
+        # same as _dif_pair only pull the three matching value cards and if tie,
+        # compare the two remaining kickers.
+        return result
+
+    def _dif_flush(self, hand1, hand2):
+        # If both hands are flushes, then just get the
+        # flush with the highest card(s).
+        return self._dif_high_card(hand1, hand2)
+
+    def _print_5_card_hand(self, hand):
+        print ('-' * 10)
+        for card in hand:
+            print "%s%s" % (' ' * 8, card)
 
     def scorehand_5(self, card5):
         result = HAND_RESULTS[0]
@@ -106,7 +186,6 @@ class Hand(object):
 
         if straight and flush:
             result = HAND_RESULTS[8]
-
 
         return result
 
