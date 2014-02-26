@@ -250,6 +250,20 @@ class Player(object):
         return self.__unicode__()
 
 
+class ScoreData(object):
+
+    def __init__(self, score, high_card1, high_card2=0):
+        self.score = score
+        self.high_card1 = high_card1
+        self.high_card2 = high_card2
+
+    def __unicode__(self):
+        return unicode(self.score)
+
+    def __str__(self):
+        return str(self.score)
+
+
 class Deck(object):
 
     def __init__(self):
