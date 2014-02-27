@@ -81,11 +81,8 @@ class Hand(object):
         return (highest, highest_hand)
 
     def _compare_same(self, hand1, hand2, score1, score2):
-        result = hand1
-        if score1[1] == 10:
-            result = self._dif_high_card(list(hand1), list(hand2))
-        if score1[1] == 20:
-            result = self._dif_high_card(list(hand1), list(hand2))
+        result = self._dif_high_card(list(hand1), list(hand2))
+
         """
         10 is highscard
         20 is pair
