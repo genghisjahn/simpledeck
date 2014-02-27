@@ -76,12 +76,17 @@ class Hand(object):
                 highest_hand = combo
 
             if current == highest:
-                highest_hand = self._compare_same(highest_hand, combo, highest, current)
+                highest_hand = self._compare_same(highest_hand, combo)
 
         return (highest, highest_hand)
 
-    def _compare_same(self, hand1, hand2, score1, score2):
-        result = self._dif_high_card(list(hand1), list(hand2))
+    def _compare_same(self, hand1, hand2):
+        kickers1 = self._return_kickers(list(hand1))
+        kickers2 = self._return_kickers(list(hand2))
+        if self._dif_high_card(list(kickers1), list(kickers2)) == 1:
+            result = hand1
+        else:
+            result = hand2
 
         """
         10 is highscard
@@ -97,16 +102,26 @@ class Hand(object):
         """
         return result
 
+    def _return_kickers(self, hand):
+        result = hand
+        for c in hand:
+            matched_cards = list(self._filterbyvalue(hand, c))
+            if(len(matched_cards)) > 1:
+                for c2 in hand:
+                    if c2.high_num == matched_cards[0].high_num:
+                        result.remove(c2)
+        return result
+
     def _dif_high_card(self, hand1, hand2):
-        result = hand1
+        result = 0
         hand1.sort(key=operator.attrgetter("high_num"), reverse=True)
         hand2.sort(key=operator.attrgetter("high_num"), reverse=True)
         for card_hand1, card_hand2 in zip(hand1, hand2):
             if card_hand1.high_num > card_hand2.high_num:
-                result = hand1
+                result = 1
                 break
             elif card_hand1.high_num < card_hand2.high_num:
-                result = hand2
+                result = 2
                 break
         else:
             pass
