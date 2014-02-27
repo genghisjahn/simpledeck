@@ -83,6 +83,12 @@ class Hand(object):
     def _compare_same(self, hand1, hand2):
         kickers1 = self._return_kickers(list(hand1))
         kickers2 = self._return_kickers(list(hand2))
+
+        print "start - kicker"
+        for k in kickers1:
+            print k
+        print "end - kicker"
+
         if self._dif_high_card(list(kickers1), list(kickers2)) == 1:
             result = hand1
         else:
@@ -102,14 +108,15 @@ class Hand(object):
         """
         return result
 
-    def _return_kickers(self, hand):
-        result = hand
+    def _return_kickers(self, hand, match_val=0):
+        # Next up, be sure to provide the match_val
+        # for of a kind hands.
+        result = []
         for c in hand:
             matched_cards = list(self._filterbyvalue(hand, c))
-            if(len(matched_cards)) > 1:
-                for c2 in hand:
-                    if c2.high_num == matched_cards[0].high_num:
-                        result.remove(c2)
+            if(len(matched_cards)) == 1 and c.high_num != match_val:
+                result.append(c)
+
         return result
 
     def _dif_high_card(self, hand1, hand2):
