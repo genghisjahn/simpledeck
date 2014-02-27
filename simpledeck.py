@@ -30,7 +30,7 @@ def main():
                 print "%s%s" % (' ' * 8, card)
 
             print str.format("score: {}", score[0])
-            if str(score[0][0]).startswith('High'):
+            if str(score[0][0]).startswith('Pair'):
                 found_flag = True
                 break
 

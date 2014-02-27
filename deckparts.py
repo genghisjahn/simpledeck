@@ -76,16 +76,15 @@ class Hand(object):
                 highest_hand = combo
 
             if current == highest:
-                highest_hand = self._compare_same(highest_hand, combo, highest)
+                highest_hand = self._compare_same(highest_hand, combo, highest, current)
 
         return (highest, highest_hand)
 
-    def _compare_same(self, hand1, hand2, score):
+    def _compare_same(self, hand1, hand2, score1, score2):
         result = hand1
-        if score[1] == 10:
-            # self._print_5_card_hand(hand1)
-            # print(type(list(hand1)))
-            # print(type(hand2))
+        if score1[1] == 10:
+            result = self._dif_high_card(list(hand1), list(hand2))
+        if score1[1] == 20:
             result = self._dif_high_card(list(hand1), list(hand2))
         """
         10 is highscard
@@ -118,16 +117,6 @@ class Hand(object):
 
         return result
 
-    def _dif_pair(self, hand1, hand2):
-        result = hand1
-        # get the two cards that comprise the pair of each hand.
-        # compare them, if one is higher, it is the winner.
-        # if they are the same, then remove the pairs from each hand
-        # so that there are only three left.  Then run the _dif_high_card
-        # function to determine who has the highest kicker.
-        # if all three kicker cards are equal, then throw tie exception for now.
-        return hand1
-
     def _dif_two_pair(self, hand1, hand2):
         result = hand1
         # get pairs from each hand.
@@ -156,11 +145,11 @@ class Hand(object):
     def scorehand_5(self, card5):
         result = HAND_RESULTS[0]
 
-        pairs = self._of_a_kind(card5, 2, "Pair of")
-        threes = self._of_a_kind(card5, 3, "Three of a kind, three ")
-        fours = self._of_a_kind(card5, 4, "Four of a kind, four ")
-        straight = self._has_straight(card5)
-        flush = self._has_flush(card5)
+        pairs = self._of_a_kind(card5, 2, "Pair of")[0]
+        threes = self._of_a_kind(card5, 3, "Three of a kind, three ")[0]
+        fours = self._of_a_kind(card5, 4, "Four of a kind, four ")[0]
+        straight = self._has_straight(card5)[0]
+        flush = self._has_flush(card5)[0]
         if len(pairs) == 2:
             result = HAND_RESULTS[2]
         elif pairs and not threes == 1:
@@ -191,13 +180,15 @@ class Hand(object):
 
     def _of_a_kind(self, card5, value, score_message):
         result = []
+        card_val = 0
         for card in card5:
             kind_present = self._filterbyvalue(self.cards, card)
             if len(list(kind_present)) == value:
+                card_val = card.high_num
                 new_val = str.format("{} {}s.", score_message, card.name)
                 if not new_val in result:
                     result.append(new_val)
-        return result
+        return ((result, card_val))
 
     def _has_flush(self, card5):
         result = []
@@ -208,7 +199,7 @@ class Hand(object):
                 if not new_val in result:
                     result.append(new_val)
                     break
-        return result
+        return ((result, 0))
 
     def _filterbyvalue(self, seq, value):
         for el in seq:
@@ -231,7 +222,7 @@ class Hand(object):
         if self._sequential_ints(low_nums) or self._sequential_ints(high_nums):
             result.append("Straight.")
 
-        return result
+        return ((result, 0))
 
     def _sequential_ints(self, item_vals):
         return len(item_vals) == len(set(item_vals)) == max(item_vals) - min(item_vals) + 1
